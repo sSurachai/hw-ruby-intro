@@ -11,10 +11,15 @@ def max_2_sum arr
 end
 
 def sum_to_n? arr, n
-  return false unless arr.length > 1
-  !arr.find do |el|
-  arr.include?(n - el) && ((n - el) == el ? arr.count(el) > 1 : true)
-  end.nil?
+  complements = {}
+  arr.each do |element|
+    complement = n - element
+    return true if complements[complement]
+    complements[element] = true
+  end
+
+  # If we reach this point, no two elements sum up to n
+  return false
 end
 
 # Part 2
@@ -24,11 +29,14 @@ def hello(name)
 end
 
 def starts_with_consonant? s
-  !(s =~ /^(?![aeiou])[a-z]/i).nil?
+  return false if s.empty? || !s[0].match?(/[a-zA-Z]/)
+  s[0].match?(/^[b-df-hj-np-tv-z]/i)
 end
 
 def binary_multiple_of_4? s
-  !(s =~ /^(?:[01]*00|0)$/).nil?
+  return false unless s.match?(/^[01]+$/)
+  number = s.to_i(2)
+  number % 4 == 0
 end
 
 # Part 3
